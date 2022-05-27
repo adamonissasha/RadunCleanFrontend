@@ -5,7 +5,6 @@ import CartService from '../../services/CartService';
 function Kitchen() {
     const [isAdded, setIsAdded] = React.useState(false);
     const name = 'Уборка кухни';
-    const price = 85;
 
     const addToCart = () => {
         const newElement = {
