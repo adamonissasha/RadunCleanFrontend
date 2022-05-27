@@ -4,15 +4,24 @@ import CartService from '../../services/CartService'
 
 
 function DryCleaningCard({ name, unit, imgUrl, price}) {
-    const [isAdded, setIsAdded] = React.useState(false);
+    const [isAdded, setIsAdded] = React.useState();
     const [count, setcount] = React.useState(1);
 
+    React.useEffect(() => {
+        CartService.getCart().then(
+            (responce) => {
+                setIsAdded(responce.data.find(obj => obj.name === name) !== undefined  ? true : false)
+                setcount(responce.data.find(obj => obj.name === name).count)
+            })
+    }, [])
+    
+
     const plus = () => {
-        setcount(count === 20 ? count : count + 1);
+        setcount(isAdded || count === 20 ? count : count + 1);
     };
 
     const minus = () => {
-        setcount(count === 1 ? count : count - 1);
+        setcount(isAdded || count === 1 ? count : count - 1);
     };
 
     const addToCart = (e) => {
@@ -25,6 +34,7 @@ function DryCleaningCard({ name, unit, imgUrl, price}) {
             unit: unit,
             count: count,
         };
+
         setIsAdded(true);
         CartService.addElementToCart(newElement);
     };

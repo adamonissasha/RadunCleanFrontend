@@ -3,17 +3,25 @@ import styles from './Window.module.scss'
 import CartService from '../../services/CartService';
 
 function Window() {
-    const [isAdded, setIsAdded] = React.useState();
     const [countWindows, setCountWindows] = React.useState(1);
     const name = 'Мытье окон';
     const price = 12;
+    const [isAdded, setIsAdded] = React.useState();
 
+    React.useEffect(() => {
+        CartService.getCart().then(
+            (responce) => {
+                setIsAdded(responce.data.find(obj => obj.name === "Мытье окон") !== undefined  ? true : false)
+                setCountWindows(responce.data.find(obj => obj.name === "Мытье окон").count)
+            })
+    }, [])
+    
     const plusWindow = () => {
-        setCountWindows(countWindows === 20 ? countWindows : countWindows + 1);
+        setCountWindows((countWindows === 20 || isAdded) ? countWindows : countWindows + 1);
     };
 
     const minusWindow = () => {
-        setCountWindows(countWindows === 1 ? countWindows : countWindows - 1);
+        setCountWindows((countWindows === 1 || isAdded ) ? countWindows : countWindows - 1);
     };
 
     const addToCart = () => {

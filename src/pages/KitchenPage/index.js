@@ -3,8 +3,17 @@ import styles from './Kitchen.module.scss'
 import CartService from '../../services/CartService';
 
 function Kitchen() {
-    const [isAdded, setIsAdded] = React.useState(false);
     const name = 'Уборка кухни';
+    const price = 85;
+    const [isAdded, setIsAdded] = React.useState(false);
+
+    React.useEffect(() => {
+        CartService.getCart().then(
+            (responce) => {
+                console.log(responce.data)
+                setIsAdded(responce.data.find(obj => obj.name === name) !== undefined ? true : false)
+            })
+    }, [])
 
     const addToCart = () => {
         const newElement = {
@@ -14,6 +23,7 @@ function Kitchen() {
             unit: "шт",
             count: 1,
         };
+
         setIsAdded(true);
         CartService.addElementToCart(newElement);
     };
@@ -50,10 +60,11 @@ function Kitchen() {
                     </button>
                 </div> :
                 <button className={styles.orderbutton} onClick={addToCart}>
-                <h2>Заказать {price} BYN</h2>
-            </button>
+                    <h2>Заказать {price} BYN</h2>
+                </button>
             }
         </div>
+
     );
 }
 

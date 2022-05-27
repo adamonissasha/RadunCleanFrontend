@@ -14,6 +14,10 @@ class CartService {
     deleteCartElement(id) {
         axios.delete(API_PRODUCT_URL + "deleteCartElement/" + id)
     }
+
+    getCartSum(userId) {
+        return axios.get(API_PRODUCT_URL + "cartSum/" + userId);
+    }
 }
 
 export default new CartService();

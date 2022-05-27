@@ -1,25 +1,40 @@
 import React from 'react';
 import styles from './Repair.module.scss'
+import CartService from '../../services/CartService';
 
 function Repair() {
+    const price = 3;
+    const unit = 'м2';
+    const name = 'Уборка после ремонта';
     const [isAdded, setIsAdded] = React.useState();
-    const [countRoom, setCountRoom] = React.useState(0);
-    const [countWindows, setCountWindows] = React.useState(0);
+    const [countRoom, setCountRoom] = React.useState(20);
+
+    React.useEffect(() => {
+        CartService.getCart().then(
+            (responce) => {
+                setIsAdded(responce.data.find(obj => obj.name === "Уборка после ремонта") !== undefined  ? true : false)
+                setCountRoom(responce.data.find(obj => obj.name === "Уборка после ремонта").count)
+            })
+    }, [])
 
     const plusRoom = () => {
-        setCountRoom(countRoom === 200 ? countRoom : countRoom + 1);
+        setCountRoom(countRoom === 200 || isAdded ? countRoom : countRoom + 1);
     };
 
     const minusRoom = () => {
-        setCountRoom(countRoom === 0 ? countRoom : countRoom - 1);
+        setCountRoom(countRoom === 20 || isAdded ? countRoom : countRoom - 1);
     };
 
-    const plusWindow = () => {
-        setCountWindows(countWindows === 20 ? countWindows : countWindows + 1);
-    };
-
-    const minusWindow = () => {
-        setCountWindows(countWindows === 0 ? countWindows : countWindows - 1);
+    const addToCart = () => {
+        const newElement = {
+            userId: 1,
+            name: name,
+            price: price,
+            unit: unit,
+            count: countRoom,
+        };
+        setIsAdded(true);
+        CartService.addElementToCart(newElement);
     };
 
     return (
@@ -37,7 +52,7 @@ function Repair() {
                         <h2>Время уборки от 4 часов</h2>
                     </div>
                     <div className={styles.price}>
-                        <h2>Цена 3 BYN / м2, 12 BYN / окно</h2>
+                        <h2>Цена {price} BYN / {unit}</h2>
                     </div>
                 </div>
             </div>
@@ -59,34 +74,17 @@ function Repair() {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.title}>
-                        <h4>ОКНА</h4>
-                        <div className={styles.counter}>
-                            <div className={styles.buttonminus}>
-                                <button onClick={minusWindow}>
-                                    <img src='/img/minus.png' alt='Minus' />
-                                </button>
-                            </div>
-                            <h1>{countWindows}</h1>
-                            <div className={styles.buttonplus}>
-                                <button onClick={plusWindow}>
-                                    <img src='/img/plus.png' alt='Plus' />
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
 
                 <div className={styles.priceorder}>
-                    <h2>99 BYN</h2>
+                    <h2>{price * countRoom} BYN</h2>
                     {isAdded ?
                         <div className={styles.buttonActive}>
                             <button>
                                 <img src='/img/done.png' />
                             </button>
                         </div> :
-                        <button onClick={() => setIsAdded(true)}>
+                        <button onClick={addToCart}>
                             <img src='/img/plus.png' />
                         </button>
                     }

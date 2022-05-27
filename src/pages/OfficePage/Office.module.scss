@@ -93,6 +93,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    justify-content: center;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 
@@ -103,6 +104,32 @@
     h2 {
         font-size: 20px;
         font-weight: 300;
-        margin-left: 210px;
+    }
+}
+
+.buttonActive {
+
+    h2 {
+        font-size: 20px;
+        font-weight: 300;
+        margin-left: 200px;
+    }
+
+    button {
+        background-color: #eff1f6;
+        width: 500px;
+        height: 55px;
+        border-radius: 20px;
+        border: 0;
+        font-size: 20px;
+        margin-top: 0px;
+        margin-bottom: 30px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+
     }
 }

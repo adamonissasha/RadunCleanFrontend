@@ -58,7 +58,6 @@ function Header(props) {
                         <img src="/img/cart.png" alt='Cart' />
                     </button>
                 </Link>
-                <h3>120 BYN</h3>
             </div>
         </header>
     );

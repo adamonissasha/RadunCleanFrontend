@@ -16,6 +16,7 @@
     border-radius: 20px;
     padding-top: 20px;
     margin-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .card {
@@ -89,16 +90,20 @@
         font-size: 20px;
     }
 
+    ul {
+        padding-right: 40px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
     b {
         font-size: 20px;
         font-weight: 400;
-        margin-right: 30px;
     }
 
     li {
         display: flex;
         align-items: flex-end;
-        margin-bottom: 20px;
     }
 
 }
@@ -169,5 +174,29 @@
         font-size: 14px;
         font-weight: 400;
         text-align: center;
+    }
+}
+
+.emptyCart {
+    background-color: #ffffff;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    h2 {
+        margin-bottom: 0;
+        font-weight: 500;
+        font-size: 24px;
+    }
+}
+
+.image {
+    display: flex;
+    justify-content: center;
+    img {
+        height: 170px;
     }
 }

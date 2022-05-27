@@ -18,26 +18,26 @@ import AdminPage from './pages/AdminPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Menu from './components/Menu';
+import CartService from './services/CartService';
 
 
 function App() {
-  const [cartItems, setCartItems] = React.useState([]);
   const [menuOpened, setMenuOpened] = React.useState(false);
   const [auth, setAuth] = React.useState(false);
 
   return (
     <div className='wrapper'>
       <Header onClickMenu={() => setMenuOpened(!menuOpened)} />
-      {menuOpened ? <Menu onClickMenu={() => setMenuOpened(false)}/> : null}
+      {menuOpened ? <Menu onClickMenu={() => setMenuOpened(false)} /> : null}
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/cart" element={<CartPage items={cartItems} />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/user" element={<UserPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/office" element={<OfficePage />} />
         <Route path="/kitchen" element={<KitchenPage />} />
-        <Route path="/dry-cleaning" element={<DryCleaningPage items={cartItems} setCartItems={setCartItems} />} />
-        <Route path="/window" element={<WindowPage items={cartItems} setCartItems={setCartItems} />} />
+        <Route path="/dry-cleaning" element={<DryCleaningPage />} />
+        <Route path="/window" element={<WindowPage/>} />
         <Route path="/repair" element={<RepairPage />} />
         <Route path="/vacancy" element={<VacancyPage />} />
         <Route path="/sales" element={<SalesPage />} />
@@ -45,7 +45,7 @@ function App() {
         <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/admin" element={<AdminPage />} />
       </Routes>
-      <Footer onClickMenu={() => setMenuOpened(false)}/>
+      <Footer onClickMenu={() => setMenuOpened(false)} />
     </div>
   );
 }
