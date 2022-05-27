@@ -1,0 +1,35 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px;
+
+    h1 {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+
+    button {
+        background-color: #fff;
+        margin-left: 30px;
+        margin-right: 30px;
+        border: 0;
+        border-radius: 35px;
+        width: 300px;
+        height: 70px;
+
+        h2 {
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        &:hover {
+            background-color: #eaeff3;
+        }
+    }
+
+}

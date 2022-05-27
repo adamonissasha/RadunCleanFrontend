@@ -1,0 +1,108 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px;
+
+    h1 {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+
+.text {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    cursor: pointer;
+
+    p {
+        margin-left: 20px;
+        margin-right: 50px;
+        font-size: 20px;
+        text-align: justify;
+    }
+
+    img {
+        height: 320px;
+        padding-right: 40px;
+    }
+
+    h2 {
+        margin-left: 30px;
+        font-weight: 500;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.time1 {
+    background-color: #dfe5ec;
+    margin-left: 120px;
+    width: 340px;
+    height: 50px;
+    border-radius: 30px;
+    padding-top: 10px;
+}
+
+.price1 {
+    background-color: #dfe5ec;
+    margin-top: 10px;
+    margin-left: 180px;
+    width: 210px;
+    height: 50px;
+    border-radius: 30px;
+    padding-top: 10px;
+}
+
+.time2 {
+    background-color: #dfe5ec;
+    margin-left: 80px;
+    width: 410px;
+    height: 50px;
+    border-radius: 30px;
+    padding-top: 10px;
+}
+
+.price2 {
+    background-color: #dfe5ec;
+    margin-top: 10px;
+    margin-left: 120px;
+    width: 320px;
+    height: 50px;
+    border-radius: 30px;
+    padding-top: 10px;
+}
+
+.orderbutton {
+    width: 500px;
+    height: 55px;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 0;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #e8eff1;
+    }
+
+    h2 {
+        font-size: 20px;
+        font-weight: 300;
+        margin-left: 210px;
+    }
+}

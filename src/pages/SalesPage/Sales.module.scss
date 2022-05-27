@@ -1,0 +1,45 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px;
+
+    h1 {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.sale {
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-bottom: 40px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background-color: #ebf1f3;
+    }
+
+    img {
+        height: 130px;
+        margin-left: 40px;
+    }
+
+    h1 {
+        font-size: 40px;
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+
+    p {
+        font-size: 22px;
+        margin-top: 10px;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-bottom: 40px;
+        text-align:justify;
+    }
+}

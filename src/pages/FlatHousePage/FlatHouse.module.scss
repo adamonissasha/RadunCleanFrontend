@@ -1,0 +1,16 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px;
+
+    h1 {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.house {
+    h1 {
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,71 @@
+.content {
+    flex-direction: column;
+    padding-top: 120px;
+    
+    h1 {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.sale {
+    display: flex;
+    align-items: center;
+    margin-left: 35px;
+
+}
+
+.text {
+    margin-left: 0;
+
+    h2 {
+        font-size: 24px;
+        width: 500px;
+    }
+
+    p {
+        margin-left: 30px;
+        margin-right: 50px;
+    }
+}
+
+.reviews {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    background-color: #ffffff;
+    margin-right: 70px;
+    margin-left: 70px;
+    border-radius: 20px;
+    padding: 60px;
+
+
+    p {
+        font-size: 18px;
+        font-weight: 350;
+        margin-top: 0;
+        margin-bottom: 30px;
+        text-align: justify;
+    }
+    
+    button {
+        height: 170px;
+        background-color: #ebedf3;
+        border-color: #ffffff;
+        border: 0;
+        border-radius: 20px;
+        margin-left: 160px;
+        margin-top: 20px;
+    }
+
+    button:hover {
+        background-color: #dce2ea;
+    }
+
+    img {
+        height: 100px;
+        width: 100px;
+    }
+}
