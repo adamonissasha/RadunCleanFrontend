@@ -3,8 +3,8 @@ import axios from "axios";
 const API_PRODUCT_URL = "http://localhost:8080/"
 
 class CartService {
-    getCart() {
-        return axios.get(API_PRODUCT_URL + "cart");
+    getCart(userId) {
+        return axios.get(API_PRODUCT_URL + "cart/" + userId);
     }
 
     addElementToCart(newElement) {
@@ -17,6 +17,10 @@ class CartService {
 
     getCartSum(userId) {
         return axios.get(API_PRODUCT_URL + "cartSum/" + userId);
+    }
+
+    clearCart(userId) {
+        axios.delete(API_PRODUCT_URL + "clearCart/" + userId)
     }
 }
 

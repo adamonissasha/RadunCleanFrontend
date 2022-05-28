@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './Kitchen.module.scss'
 import CartService from '../../services/CartService';
 
-function Kitchen() {
+function Kitchen(props) {
     const name = 'Уборка кухни';
     const price = 85;
     const [isAdded, setIsAdded] = React.useState(false);
 
     React.useEffect(() => {
-        CartService.getCart().then(
+        CartService.getCart(props.userId).then(
             (responce) => {
                 console.log(responce.data)
                 setIsAdded(responce.data.find(obj => obj.name === name) !== undefined ? true : false)
@@ -17,7 +17,7 @@ function Kitchen() {
 
     const addToCart = () => {
         const newElement = {
-            userId: 1,
+            userId: props.userId,
             name: name,
             price: price,
             unit: "шт",

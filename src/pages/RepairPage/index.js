@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Repair.module.scss'
 import CartService from '../../services/CartService';
 
-function Repair() {
+function Repair(props) {
     const price = 3;
     const unit = 'м2';
     const name = 'Уборка после ремонта';
@@ -10,7 +10,7 @@ function Repair() {
     const [countRoom, setCountRoom] = React.useState(20);
 
     React.useEffect(() => {
-        CartService.getCart().then(
+        CartService.getCart(props.userId).then(
             (responce) => {
                 setIsAdded(responce.data.find(obj => obj.name === "Уборка после ремонта") !== undefined  ? true : false)
                 setCountRoom(responce.data.find(obj => obj.name === "Уборка после ремонта").count)
@@ -27,7 +27,7 @@ function Repair() {
 
     const addToCart = () => {
         const newElement = {
-            userId: 1,
+            userId: props.userId,
             name: name,
             price: price,
             unit: unit,

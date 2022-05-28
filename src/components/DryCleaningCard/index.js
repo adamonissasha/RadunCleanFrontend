@@ -3,12 +3,12 @@ import styles from './DryCleaningCard.module.scss'
 import CartService from '../../services/CartService'
 
 
-function DryCleaningCard({ name, unit, imgUrl, price}) {
+function DryCleaningCard({ name, unit, imgUrl, price, userId}) {
     const [isAdded, setIsAdded] = React.useState();
     const [count, setcount] = React.useState(1);
 
     React.useEffect(() => {
-        CartService.getCart().then(
+        CartService.getCart(userId).then(
             (responce) => {
                 setIsAdded(responce.data.find(obj => obj.name === name) !== undefined  ? true : false)
                 setcount(responce.data.find(obj => obj.name === name).count)
@@ -28,7 +28,7 @@ function DryCleaningCard({ name, unit, imgUrl, price}) {
         e.preventDefault();
 
         const newElement = {
-            userId: 1,
+            userId: userId,
             name: name,
             price: price,
             unit: unit,

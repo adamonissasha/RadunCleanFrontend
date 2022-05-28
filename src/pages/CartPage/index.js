@@ -1,16 +1,23 @@
 import React from 'react';
 import styles from './Cart.module.scss'
 import CartService from '../../services/CartService'
+import OrderService from '../../services/OrderService'
 
-function Cart() {
+function Cart(props) {
     const [sum, setSum] = React.useState(0);
     const [elements, setElements] = React.useState([])
+    const [adress, setAdress] = React.useState("")
+    const [comment, setComment] = React.useState("")
+    const [date, setDate] = React.useState("")
+    const [time, setTime] = React.useState("")
+    const user = JSON.parse(localStorage.getItem('user'))
 
     React.useEffect(() => {
-        CartService.getCart().then((responce) => {
+        props.auth && CartService.getCart(user.id).then((responce) => {
+            localStorage.setItem("cart", JSON.stringify(responce.data))
             console.log(responce.data)
             setElements(responce.data)
-            CartService.getCartSum(1).then((res) => setSum(res.data))
+            CartService.getCartSum(user.id).then((res) => setSum(res.data))
         })
     }, [])
 
@@ -18,6 +25,28 @@ function Cart() {
         CartService.deleteCartElement(id);
         window.location.reload();
     };
+
+    const addOrder = () => {
+        localStorage.removeItem("cart")
+        CartService.clearCart(user.id)
+        elements.map(obj => {
+            const newOrder = {
+                userId: user.id,
+                name: obj.name,
+                price: obj.price * obj.count,
+                count: obj.count,
+                userFIO : user.fio,
+                userPhone : user.phone,
+                userEmail: user.email,
+                address: adress,
+                date: date,
+                time: time,
+                comment: comment,
+                orderCreationDate: new Date().toJSON().slice(0,10)
+            };
+            OrderService.addOrder(newOrder);
+        })
+    }
 
     return (
         <div className={styles.content}>
@@ -59,7 +88,7 @@ function Cart() {
                                 </div>
                                 <div className={styles.delete}>
                                     <button onClick={() => deleteCartElement(obj.id)}>
-                                        <img src='/img/delete.png' />
+                                        <img src='/img/delete.png' alt="delete" />
                                     </button>
                                 </div>
                             </div>
@@ -74,17 +103,57 @@ function Cart() {
                             </li>
                         </ul>
                     </div>
-                    <button className={styles.orderbutton}>
-                        <h2>Оформить заказ</h2>
-                        <img src='/img/arrow.png' alt='Arrow' />
-                    </button>
+                    <form onSubmit={addOrder}>
+                        <div className={styles.info}>
+                            <div className={styles.element}>
+                                <h2>Адрес:</h2>
+                                <input required
+                                    value={adress}
+                                    onChange={(e) => setAdress(e.target.value)} />
+                            </div>
+                            <div className={styles.element}>
+                                <h2>Дата:</h2>
+                                <input
+                                    required
+                                    type="date"
+                                    max="2022-07-30"
+                                    min="2022-06-03"
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)} />
+                            </div>
+                            <div className={styles.element}>
+                                <h2>Время:</h2>
+                                <input
+                                    required
+                                    type="time"
+                                    max='20:00'
+                                    min='09:00'
+                                    value={time}
+                                    onChange={(e) => setTime(e.target.value)}
+                                />
+                            </div>
+                            <div className={styles.element}>
+                                <h2>Комментарий:</h2>
+                                <input
+                                    required
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className={styles.orderbutton}>
+                            <button>
+                                <h2>Оформить заказ</h2>
+                            </button>
+                        </div>
+                    </form>
+
                 </div>
                 : <div className={styles.emptyCart}>
-                <div>
-                    <div className={styles.image}><img src='/img/emptyCart.png' alt='Empty Cart' /></div>
-                    <h2>Ваша корзина пуста!</h2>
+                    <div>
+                        <div className={styles.image}><img src='/img/emptyCart.png' alt='Empty Cart' /></div>
+                        <h2>Ваша корзина пуста!</h2>
+                    </div>
                 </div>
-            </div>
             }
         </div>
     );

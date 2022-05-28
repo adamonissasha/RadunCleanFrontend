@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Office.module.scss';
 import CartService from '../../services/CartService';
 
-function Office() {
+function Office(props) {
     const name1 = "Разовая уборка офиса";
     const name2 = "Регулярная уборка офиса";
     const unit1 = 'шт';
@@ -14,7 +14,7 @@ function Office() {
     const [isAdded2, setIsAdded2] = React.useState();
 
     React.useEffect(() => {
-        CartService.getCart().then(
+        CartService.getCart(props.userId).then(
             (responce) => {
                 setIsAdded1(responce.data.find(obj => obj.name === "Разовая уборка офиса") !== undefined ? true : false)
                 setIsAdded2(responce.data.find(obj => obj.name === "Регулярная уборка офиса") !== undefined ? true : false)
@@ -23,7 +23,7 @@ function Office() {
 
     const addToCart1 = () => {
         const newElement = {
-            userId: 1,
+            userId: props.userId,
             name: name1,
             price: price1,
             unit: unit1,
@@ -35,7 +35,7 @@ function Office() {
 
     const addToCart2 = () => {
         const newElement = {
-            userId: 1,
+            userId: props.userId,
             name: name2,
             price: price2,
             unit: unit2,

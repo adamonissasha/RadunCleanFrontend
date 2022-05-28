@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './Window.module.scss'
 import CartService from '../../services/CartService';
 
-function Window() {
+function Window(props) {
     const [countWindows, setCountWindows] = React.useState(1);
     const name = 'Мытье окон';
     const price = 12;
     const [isAdded, setIsAdded] = React.useState();
 
     React.useEffect(() => {
-        CartService.getCart().then(
+        CartService.getCart(props.userId).then(
             (responce) => {
                 setIsAdded(responce.data.find(obj => obj.name === "Мытье окон") !== undefined  ? true : false)
                 setCountWindows(responce.data.find(obj => obj.name === "Мытье окон").count)
@@ -26,7 +26,7 @@ function Window() {
 
     const addToCart = () => {
         const newElement = {
-            userId: 1,
+            userId: props.userId,
             name: name,
             price: price,
             unit: "шт",

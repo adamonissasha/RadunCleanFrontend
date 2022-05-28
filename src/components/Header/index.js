@@ -32,24 +32,27 @@ function Header(props) {
             </div>
 
             <div className={styles.usercart}>
-                <Link to="/admin">
+                {props.role === "admin" ? <Link to="/admin">
                     <button>
                         <img src="/img/edit.png" alt='Edit' />
                     </button>
-                </Link>
+                </Link> : <div></div>
+                }
 
-                {props.auth ?
-                    <Link to='/user'>
+                {localStorage.getItem("auth")
+                    ? <Link to='/'>
+                        <button onClick={() => {
+                            localStorage.clear();
+                            window.location.reload();
+                        }}>
+                            <img src="/img/logout.png" alt='Logout' />
+                        </button>
+                    </Link>
+                    : <Link to='/user'>
                         <button>
                             <img src="/img/user.png" alt='User' />
                         </button>
-                    </Link> :
-                    <button onClick={() => {
-                        localStorage.clear();
-                        window.location.reload();
-                    }}>
-                        <img src="/img/logout.png" alt='Logout' />
-                    </button>
+                    </Link>
                 }
 
 
@@ -59,7 +62,7 @@ function Header(props) {
                     </button>
                 </Link>
             </div>
-        </header>
+        </header >
     );
 }
 

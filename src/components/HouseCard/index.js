@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './HouseCard.module.scss'
 import CartService from '../../services/CartService'
 
-function HouseCard() {
+function HouseCard(props) {
     const name = "Уборка дома";
     const unit = 'шт';
     const count = 1;
@@ -14,7 +14,7 @@ function HouseCard() {
     const [countBathrooms, setCountBathrooms] = React.useState(1);
 
     React.useEffect(() => {
-        CartService.getCart().then(
+        CartService.getCart(props.userId).then(
             (responce) => {
                 console.log(responce.data)
                 setIsAdded(responce.data.find(obj => obj.name === name) !== undefined ? true : false)
@@ -25,16 +25,14 @@ function HouseCard() {
 
     const addToCart = () => {
         const newElement = {
-            userId: 1,
+            userId: props.userId,
             name: name,
             price: startPrice + countRooms * priceRoom + countBathrooms * priceBathroom,
             unit: unit,
             count: count,
-            count1: countRooms, 
-            count2 : countBathrooms
+            count1: countRooms,
+            count2: countBathrooms
         };
-        // localStorage.setItem("CountRooms", countRooms);
-        // localStorage.setItem("CountBathrooms", countBathrooms);
         setIsAdded(true);
         CartService.addElementToCart(newElement);
     };

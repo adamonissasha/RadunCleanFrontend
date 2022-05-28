@@ -25,13 +25,14 @@ const typesOfFlats = [
     },
 ];
 
-function FlatHouse() {
+function FlatHouse(props) {
     return (
         <div className={styles.content}>
             <h1>Уборка квартиры</h1>
             <div className="flats">
                 {typesOfFlats.map((obj) => (
                     <FlatCard
+                        userId={props.userId}
                         type={obj.type}
                         price={obj.price}
                         text={obj.text}
@@ -43,7 +44,7 @@ function FlatHouse() {
                 <h1>Уборка дома</h1>
             </div>
             <div className="house">
-                <HouseCard />
+                <HouseCard userId={props.userId} />
             </div>
             <h1>Что вкючено в уборку?</h1>
             <div className='slider'>

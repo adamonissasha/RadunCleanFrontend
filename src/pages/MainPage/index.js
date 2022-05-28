@@ -36,13 +36,14 @@ const services = [
   { name: 'Окна', imgUrl: '/img/services/window.jpg', page: 'window' },
 ];
 
-function Main() {
+function Main(props) {
   return (
     <div className="content">
       <h1>Хотите заказать уборку квартиры/дома?</h1>
       <div className="flats">
         {typesOfFlats.map((obj) => (
           <FlatCard
+            userId={props.userId}
             type={obj.type}
             price={obj.price}
             text={obj.text}
@@ -51,7 +52,7 @@ function Main() {
         ))}
       </div>
       <div className="house">
-        <HouseCard />
+        <HouseCard userId={props.userId} />
       </div>
 
       <h1>Уборку каких видов мы выполняем?</h1>

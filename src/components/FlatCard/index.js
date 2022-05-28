@@ -6,7 +6,7 @@ function FlatCard(props) {
     const [isAdded, setIsAdded] = React.useState(false);
 
     React.useEffect(() => {
-        CartService.getCart().then(
+        CartService.getCart(props.userId).then(
             (responce) => {
                 setIsAdded(responce.data.find(obj => obj.name === (props.type + " квартира")) !== undefined ? true : false)
             })
@@ -14,7 +14,7 @@ function FlatCard(props) {
 
     const addToCart = () => {
         const newElement = {
-            userId: 1,
+            userId: props.userId,
             name: props.type + " квартира",
             price: props.price,
             unit: 'шт',

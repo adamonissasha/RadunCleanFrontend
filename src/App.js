@@ -18,31 +18,36 @@ import AdminPage from './pages/AdminPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Menu from './components/Menu';
-import CartService from './services/CartService';
 
 
 function App() {
   const [menuOpened, setMenuOpened] = React.useState(false);
   const [auth, setAuth] = React.useState(false);
+  const [user, setUser] = React.useState({});
+
+  React.useEffect(() => {
+    localStorage.getItem("user") && setUser(JSON.parse(localStorage.getItem("user") || ""));
+    console.log(user)
+  }, [])
 
   return (
     <div className='wrapper'>
-      <Header onClickMenu={() => setMenuOpened(!menuOpened)} />
+      <Header role={user.roles} onClickMenu={() => setMenuOpened(!menuOpened)} />
       {menuOpened ? <Menu onClickMenu={() => setMenuOpened(false)} /> : null}
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/" element={<MainPage userId={user.id}/>} />
+        <Route path="/cart" element={<CartPage auth={auth} />} />
         <Route path="/user" element={<UserPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/office" element={<OfficePage />} />
-        <Route path="/kitchen" element={<KitchenPage />} />
-        <Route path="/dry-cleaning" element={<DryCleaningPage />} />
-        <Route path="/window" element={<WindowPage/>} />
-        <Route path="/repair" element={<RepairPage />} />
+        <Route path="/office" element={<OfficePage userId={user.id}/>} />
+        <Route path="/kitchen" element={<KitchenPage userId={user.id}/>} />
+        <Route path="/dry-cleaning" element={<DryCleaningPage userId={user.id}/>} />
+        <Route path="/window" element={<WindowPage userId={user.id}/>} />
+        <Route path="/repair" element={<RepairPage userId={user.id}/>} />
         <Route path="/vacancy" element={<VacancyPage />} />
         <Route path="/sales" element={<SalesPage />} />
-        <Route path="/flat-house" element={<FlatHousePage />} />
-        <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/flat-house" element={<FlatHousePage userId={user.id}/>} />
+        <Route path="/reviews" element={<ReviewsPage userId={user.id}/>} />
         <Route path="/admin" element={<AdminPage />} />
       </Routes>
       <Footer onClickMenu={() => setMenuOpened(false)} />

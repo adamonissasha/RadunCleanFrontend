@@ -109,40 +109,32 @@
 }
 
 .orderbutton {
-    width: 500px;
-    height: 55px;
-    background: #ffffff;
-    border-radius: 20px;
-    border: 0;
-    font-size: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
 
-    &:hover {
-        background-color: #e8eff1;
-
-        img {
-            transform: translateX(5px);
-        }
-    }
-
-    h2 {
+    button {
+        width: 500px;
+        height: 55px;
+        background: #ffffff;
+        border-radius: 20px;
+        border: 0;
         font-size: 20px;
-        font-weight: 300;
-        margin-left: 170px;
-    }
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+      
+        &:hover {
+            background-color: #e8eff1;
+        }
 
-    img {
-        margin-right: 20px;
-        width: 25px;
-        transition: transform 0.2s ease-in-out;
+        h2 {
+            font-size: 20px;
+            font-weight: 300;
+        }
     }
 }
 
@@ -186,6 +178,7 @@
     display: flex;
     justify-content: center;
     padding: 40px;
+
     h2 {
         margin-bottom: 0;
         font-weight: 500;
@@ -196,7 +189,52 @@
 .image {
     display: flex;
     justify-content: center;
+
     img {
         height: 170px;
     }
+}
+
+.info {
+    background-color: #ffffff;
+    margin-left: 70px;
+    margin-right: 70px;
+    border-radius: 20px;
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
+.element {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+    align-items: center;
+
+    h2 {
+        font-weight: 500;
+        font-size: 26px;
+    }
+
+    h3 {
+        font-weight: 400;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 28px;
+    }
+
+    input {
+        background-color: #e9eff1;
+        border-radius: 35px;
+        width: 800px;
+        padding-left: 30px;
+        padding-right: 30px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        font-size: 22px;
+        border: 0;
+    }
+
 }
