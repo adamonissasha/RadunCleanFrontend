@@ -43,7 +43,8 @@ function Main(props) {
       <div className="flats">
         {typesOfFlats.map((obj) => (
           <FlatCard
-            userId={props.userId}
+            key={obj.price}
+            user={props.user}
             type={obj.type}
             price={obj.price}
             text={obj.text}
@@ -52,13 +53,14 @@ function Main(props) {
         ))}
       </div>
       <div className="house">
-        <HouseCard userId={props.userId} />
+        <HouseCard user={props.user} />
       </div>
 
       <h1>Уборку каких видов мы выполняем?</h1>
       <div className='services'>
         {services.map((obj) => (
           <Services
+            key={obj.name}
             name={obj.name}
             imgUrl={obj.imgUrl}
             page={obj.page}

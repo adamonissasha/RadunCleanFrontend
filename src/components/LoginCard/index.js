@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthService from '../../services/AuthService';
 
 
-function LoginCard() {
+function LoginCard(props) {
   const [email, addEmail] = React.useState();
   const [password, addPassword] = React.useState();
 
@@ -30,11 +30,10 @@ function LoginCard() {
 
     AuthService.login(Customer).then(
       (res) => {
-        console.log(res.data)
         localStorage.setItem("user", JSON.stringify(res));
         localStorage.setItem("auth", JSON.stringify(true));
+        // props.setUser(JSON.parse(localStorage.getItem('user').id))
         navigator("/");
-        // setErrorMessage("");
         window.location.reload();
       },
       (error) => {

@@ -39,6 +39,7 @@
         border-radius: 10px;
         height: 45px;
         width: 140px;
+        margin-left: 20px;
         transition: background-color 0.2s ease-in-out;
 
         &:hover {
@@ -61,6 +62,7 @@
 .priceorder {
     display: flex;
     justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
     img {

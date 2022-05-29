@@ -10,10 +10,10 @@ function Repair(props) {
     const [countRoom, setCountRoom] = React.useState(20);
 
     React.useEffect(() => {
-        CartService.getCart(props.userId).then(
+        localStorage.getItem("user") != null && CartService.getCart(props.user.id).then(
             (responce) => {
-                setIsAdded(responce.data.find(obj => obj.name === "Уборка после ремонта") !== undefined  ? true : false)
-                setCountRoom(responce.data.find(obj => obj.name === "Уборка после ремонта").count)
+                setIsAdded(responce.data.find(obj => obj.name === "Уборка после ремонта") !== undefined ? true : false)
+                setCountRoom(responce.data.find(obj => obj.name === "Уборка после ремонта") !== undefined ? responce.data.find(obj => obj.name === "Уборка после ремонта").count : 1)
             })
     }, [])
 
@@ -27,7 +27,7 @@ function Repair(props) {
 
     const addToCart = () => {
         const newElement = {
-            userId: props.userId,
+            userId: props.user.id,
             name: name,
             price: price,
             unit: unit,
@@ -78,7 +78,7 @@ function Repair(props) {
 
                 <div className={styles.priceorder}>
                     <h2>{price * countRoom} BYN</h2>
-                    {isAdded ?
+                    {(localStorage.getItem("user") != null && props.user.active) && (isAdded ?
                         <div className={styles.buttonActive}>
                             <button>
                                 <img src='/img/done.png' />
@@ -87,7 +87,7 @@ function Repair(props) {
                         <button onClick={addToCart}>
                             <img src='/img/plus.png' />
                         </button>
-                    }
+                    )}
                 </div>
             </div>
             <div className={styles.sale}>

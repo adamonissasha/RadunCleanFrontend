@@ -8,7 +8,7 @@ function Kitchen(props) {
     const [isAdded, setIsAdded] = React.useState(false);
 
     React.useEffect(() => {
-        CartService.getCart(props.userId).then(
+        props.user.id !== undefined && CartService.getCart(props.user.id).then(
             (responce) => {
                 console.log(responce.data)
                 setIsAdded(responce.data.find(obj => obj.name === name) !== undefined ? true : false)
@@ -17,7 +17,7 @@ function Kitchen(props) {
 
     const addToCart = () => {
         const newElement = {
-            userId: props.userId,
+            userId: props.user.id,
             name: name,
             price: price,
             unit: "шт",
@@ -53,7 +53,7 @@ function Kitchen(props) {
             <div className={styles.element3}>
                 <img src='/img/kitchen-el3.png' alt='KithenElements' />
             </div>
-            {isAdded ?
+            {(localStorage.getItem("user") != null && props.user.active) && (isAdded ?
                 <div className={styles.buttonActive}>
                     <button>
                         <h2>В корзине</h2>
@@ -62,7 +62,7 @@ function Kitchen(props) {
                 <button className={styles.orderbutton} onClick={addToCart}>
                     <h2>Заказать {price} BYN</h2>
                 </button>
-            }
+            )}
         </div>
 
     );

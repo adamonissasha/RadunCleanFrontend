@@ -6,7 +6,7 @@ function FlatCard(props) {
     const [isAdded, setIsAdded] = React.useState(false);
 
     React.useEffect(() => {
-        CartService.getCart(props.userId).then(
+        localStorage.getItem("user") != null && CartService.getCart(props.user.id).then(
             (responce) => {
                 setIsAdded(responce.data.find(obj => obj.name === (props.type + " квартира")) !== undefined ? true : false)
             })
@@ -14,11 +14,13 @@ function FlatCard(props) {
 
     const addToCart = () => {
         const newElement = {
-            userId: props.userId,
+            userId: props.user.id,
             name: props.type + " квартира",
             price: props.price,
             unit: 'шт',
             count: 1,
+            count1: 0,
+            count2: 2,
         };
         setIsAdded(true);
         CartService.addElementToCart(newElement);
@@ -31,7 +33,7 @@ function FlatCard(props) {
             <h5>{props.text}</h5>
             <div className={styles.priceorder}>
                 <h2>{props.price} BYN</h2>
-                {isAdded
+                {(localStorage.getItem("user") != null && props.user.active) && (isAdded
                     ? <div className={styles.buttonActive}>
                         <button>
                             <img src='/img/done.png' />
@@ -40,7 +42,7 @@ function FlatCard(props) {
                     <button onClick={addToCart}>
                         <img src='/img/plus.png' />
                     </button>
-                }
+                )}
             </div>
         </div>
     );

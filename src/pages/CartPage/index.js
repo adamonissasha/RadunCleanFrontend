@@ -5,44 +5,43 @@ import OrderService from '../../services/OrderService'
 
 function Cart(props) {
     const [sum, setSum] = React.useState(0);
-    const [elements, setElements] = React.useState([])
+    const [elements, setElements] = React.useState(localStorage.getItem("cart") !== null ? JSON.parse(localStorage.getItem('cart')) : [])
     const [adress, setAdress] = React.useState("")
     const [comment, setComment] = React.useState("")
     const [date, setDate] = React.useState("")
     const [time, setTime] = React.useState("")
-    const user = JSON.parse(localStorage.getItem('user'))
 
     React.useEffect(() => {
-        props.auth && CartService.getCart(user.id).then((responce) => {
-            localStorage.setItem("cart", JSON.stringify(responce.data))
+        localStorage.getItem("user") != null && CartService.getCart(props.user.id).then((responce) => {
             console.log(responce.data)
-            setElements(responce.data)
-            CartService.getCartSum(user.id).then((res) => setSum(res.data))
+            localStorage.setItem("cart", JSON.stringify(responce.data))
+            setElements(JSON.parse(localStorage.getItem('cart')))
+            CartService.getCartSum(props.user.id).then((res) => setSum(res.data))
         })
     }, [])
 
-    const deleteCartElement = (id) => {
+    const remove = (id) => {
         CartService.deleteCartElement(id);
-        window.location.reload();
-    };
+        window.location.reload()
+    }
 
     const addOrder = () => {
         localStorage.removeItem("cart")
-        CartService.clearCart(user.id)
+        CartService.clearCart(props.user.id)
         elements.map(obj => {
             const newOrder = {
-                userId: user.id,
+                userId: props.user.id,
                 name: obj.name,
                 price: obj.price * obj.count,
                 count: obj.count,
-                userFIO : user.fio,
-                userPhone : user.phone,
-                userEmail: user.email,
+                userFIO: props.user.fio,
+                userPhone: props.user.phone,
+                userEmail: props.user.email,
                 address: adress,
                 date: date,
                 time: time,
                 comment: comment,
-                orderCreationDate: new Date().toJSON().slice(0,10)
+                orderCreationDate: new Date().toJSON().slice(0, 10)
             };
             OrderService.addOrder(newOrder);
         })
@@ -51,7 +50,7 @@ function Cart(props) {
     return (
         <div className={styles.content}>
             <h1>Корзина</h1>
-            {elements.length !== 0
+            {props.user.active ? (localStorage.getItem("user") != null ? ((elements.length !== 0)
                 ?
                 <div>
                     <div className={styles.cards}>
@@ -73,7 +72,7 @@ function Cart(props) {
                             </div>
                         </div>
                         {elements.map((obj) => (
-                            <div className={styles.card}>
+                            <div key={obj.id} className={styles.card}>
                                 <div className={styles.name}>
                                     <h1>{obj.name}</h1>
                                 </div>
@@ -87,7 +86,7 @@ function Cart(props) {
                                     <h2>{obj.price * obj.count} BYN</h2>
                                 </div>
                                 <div className={styles.delete}>
-                                    <button onClick={() => deleteCartElement(obj.id)}>
+                                    <button onClick={() => remove(obj.id)}>
                                         <img src='/img/delete.png' alt="delete" />
                                     </button>
                                 </div>
@@ -95,13 +94,9 @@ function Cart(props) {
                         ))}
                     </div>
                     <div className={styles.total}>
-                        <ul>
-                            <li>
-                                <span>Итого:</span>
-                                <div></div>
-                                <b>{sum} BYN</b>
-                            </li>
-                        </ul>
+                        <h2>Итого:</h2>
+                        <div></div>
+                        <b>{sum} BYN</b>
                     </div>
                     <form onSubmit={addOrder}>
                         <div className={styles.info}>
@@ -154,6 +149,17 @@ function Cart(props) {
                         <h2>Ваша корзина пуста!</h2>
                     </div>
                 </div>
+            )
+                : <div className={styles.notAuth}>
+                    <img src='/img/log-in.png' alt="LogIn" />
+                    <h2>Зарегистируйтесь или войдите в аккаунт,</h2>
+                    <h2> чтобы сделать заказ!</h2>
+                </div>
+            ) : <div className={styles.notAuth}>
+                <img src='/img/block-user.png' alt="BlockUser" />
+                <h2>Ваш аккаунт заблокирован! Для получения подробной</h2>
+                <h2>информации обратитесь номеру телефона +375 (29) 362-13-43</h2>
+            </div>
             }
         </div>
     );

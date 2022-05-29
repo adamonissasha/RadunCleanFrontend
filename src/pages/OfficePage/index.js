@@ -14,7 +14,7 @@ function Office(props) {
     const [isAdded2, setIsAdded2] = React.useState();
 
     React.useEffect(() => {
-        CartService.getCart(props.userId).then(
+        localStorage.getItem("user") != null && CartService.getCart(props.user.id).then(
             (responce) => {
                 setIsAdded1(responce.data.find(obj => obj.name === "Разовая уборка офиса") !== undefined ? true : false)
                 setIsAdded2(responce.data.find(obj => obj.name === "Регулярная уборка офиса") !== undefined ? true : false)
@@ -23,7 +23,7 @@ function Office(props) {
 
     const addToCart1 = () => {
         const newElement = {
-            userId: props.userId,
+            userId: props.user.id,
             name: name1,
             price: price1,
             unit: unit1,
@@ -35,7 +35,7 @@ function Office(props) {
 
     const addToCart2 = () => {
         const newElement = {
-            userId: props.userId,
+            userId: props.user.id,
             name: name2,
             price: price2,
             unit: unit2,
@@ -62,7 +62,7 @@ function Office(props) {
                     </div>
                 </div>
             </div>
-            {isAdded1 ?
+            {(localStorage.getItem("user") != null && props.user.active) && (isAdded1 ?
                 <div className={styles.buttonActive}>
                     <button>
                         <h2>В корзине</h2>
@@ -71,7 +71,7 @@ function Office(props) {
                 <button className={styles.orderbutton} onClick={addToCart1}>
                     <h2>Заказать {price1} BYN</h2>
                 </button>
-            }
+            )}
             <div className={styles.text}>
                 <img src='/img/office.jpg' alt='Office' />
                 <div>
@@ -87,7 +87,7 @@ function Office(props) {
                     </div>
                 </div>
             </div>
-            {isAdded2 ?
+            {(localStorage.getItem("user") != null && props.user.active) && (isAdded2 ?
                 <div className={styles.buttonActive}>
                     <button>
                         <h2>В корзине</h2>
@@ -96,7 +96,7 @@ function Office(props) {
                 <button className={styles.orderbutton} onClick={addToCart2}>
                     <h2>Заказать {price2} BYN</h2>
                 </button>
-            }
+            )}
         </div>
     );
 }

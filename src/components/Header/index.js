@@ -40,14 +40,13 @@ function Header(props) {
                 }
 
                 {localStorage.getItem("auth")
-                    ? <Link to='/'>
-                        <button onClick={() => {
-                            localStorage.clear();
-                            window.location.reload();
-                        }}>
-                            <img src="/img/logout.png" alt='Logout' />
-                        </button>
-                    </Link>
+                    ?
+                    <button onClick={() => {
+                        localStorage.clear();
+                        window.location.reload();
+                    }}>
+                        <img src="/img/logout.png" alt='Logout' />
+                    </button>
                     : <Link to='/user'>
                         <button>
                             <img src="/img/user.png" alt='User' />

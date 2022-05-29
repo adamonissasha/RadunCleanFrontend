@@ -21,7 +21,8 @@ function DryCleaning(props) {
             <div className={styles.cards}>
                 {product.map((obj) => (
                     < DryCleaningCard
-                        userId={props.userId}
+                        key={obj.id}
+                        user={props.user}
                         name={obj.name}
                         price={obj.price}
                         imgUrl={obj.imgUrl}

@@ -9,24 +9,24 @@ function Window(props) {
     const [isAdded, setIsAdded] = React.useState();
 
     React.useEffect(() => {
-        CartService.getCart(props.userId).then(
+        localStorage.getItem("user") != null && CartService.getCart(props.user.id).then(
             (responce) => {
-                setIsAdded(responce.data.find(obj => obj.name === "Мытье окон") !== undefined  ? true : false)
-                setCountWindows(responce.data.find(obj => obj.name === "Мытье окон").count)
+                setIsAdded(responce.data.find(obj => obj.name === "Мытье окон") !== undefined ? true : false)
+                setCountWindows(responce.data.find(obj => obj.name === "Мытье окон") !== undefined ? responce.data.find(obj => obj.name === "Мытье окон").count : 1)
             })
     }, [])
-    
+
     const plusWindow = () => {
         setCountWindows((countWindows === 20 || isAdded) ? countWindows : countWindows + 1);
     };
 
     const minusWindow = () => {
-        setCountWindows((countWindows === 1 || isAdded ) ? countWindows : countWindows - 1);
+        setCountWindows((countWindows === 1 || isAdded) ? countWindows : countWindows - 1);
     };
 
     const addToCart = () => {
         const newElement = {
-            userId: props.userId,
+            userId: props.user.id,
             name: name,
             price: price,
             unit: "шт",
@@ -69,7 +69,7 @@ function Window(props) {
                 </div>
                 <div className={styles.priceorder}>
                     <h2>{price * countWindows} BYN</h2>
-                    {isAdded ?
+                    {(localStorage.getItem("user") != null && props.user.active) && (isAdded ?
                         <div className={styles.buttonActive}>
                             <button>
                                 <img src='/img/done.png' />
@@ -78,7 +78,7 @@ function Window(props) {
                         <button onClick={addToCart}>
                             <img src='/img/plus.png' />
                         </button>
-                    }
+                    )}
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import LoginCard from '../../components/LoginCard';
 import RegistrCard from '../../components/RegistrCard';
 
 
-function User() {
+function User(props) {
     const [loginCardOpened, setLoginCardOpened] = React.useState(true);
     const [registerCardOpened, setRegisterCardOpened] = React.useState(false);
 
@@ -30,7 +30,7 @@ function User() {
                     <h2>ЗАРЕГИСТРИРОВАТЬСЯ</h2>
                 </button>
             </div>
-            {loginCardOpened ? <LoginCard /> : null}
+            {loginCardOpened ? <LoginCard setUser={props.setUser}/> : null}
             {registerCardOpened ? <RegistrCard /> : null}
         </div>
     );

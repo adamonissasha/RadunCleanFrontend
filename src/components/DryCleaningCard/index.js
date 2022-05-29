@@ -3,36 +3,38 @@ import styles from './DryCleaningCard.module.scss'
 import CartService from '../../services/CartService'
 
 
-function DryCleaningCard({ name, unit, imgUrl, price, userId}) {
+function DryCleaningCard({ name, unit, imgUrl, price, user }) {
     const [isAdded, setIsAdded] = React.useState();
-    const [count, setcount] = React.useState(1);
+    const [count, setCount] = React.useState(1);
 
     React.useEffect(() => {
-        CartService.getCart(userId).then(
+        localStorage.getItem("user") != null && CartService.getCart(user.id).then(
             (responce) => {
-                setIsAdded(responce.data.find(obj => obj.name === name) !== undefined  ? true : false)
-                setcount(responce.data.find(obj => obj.name === name).count)
+                setIsAdded(responce.data.find(obj => obj.name === name) !== undefined ? true : false)
+                setCount(responce.data.find(obj => obj.name === name) !== undefined ? responce.data.find(obj => obj.name === name).count : 1)
             })
     }, [])
-    
+
 
     const plus = () => {
-        setcount(isAdded || count === 20 ? count : count + 1);
+        setCount(isAdded || count === 20 ? count : count + 1);
     };
 
     const minus = () => {
-        setcount(isAdded || count === 1 ? count : count - 1);
+        setCount(isAdded || count === 1 ? count : count - 1);
     };
 
     const addToCart = (e) => {
         e.preventDefault();
 
         const newElement = {
-            userId: userId,
+            userId: user.id,
             name: name,
             price: price,
             unit: unit,
             count: count,
+            count1: 0,
+            count2: 0,
         };
 
         setIsAdded(true);
@@ -58,7 +60,7 @@ function DryCleaningCard({ name, unit, imgUrl, price, userId}) {
             </div>
             <div className={styles.priceorder}>
                 <h2>{price * count} BYN / {unit}</h2>
-                {isAdded ?
+                {(localStorage.getItem("user") != null && user.active) && (isAdded ?
                     <div className={styles.buttonActive}>
                         <button>
                             <img src='/img/done.png' />
@@ -66,7 +68,7 @@ function DryCleaningCard({ name, unit, imgUrl, price, userId}) {
                     </div> :
                     <button onClick={addToCart}>
                         <img src='/img/plus.png' />
-                    </button>
+                    </button>)
                 }
             </div>
         </div>

@@ -14,18 +14,18 @@ function HouseCard(props) {
     const [countBathrooms, setCountBathrooms] = React.useState(1);
 
     React.useEffect(() => {
-        CartService.getCart(props.userId).then(
+        localStorage.getItem("user") != null && CartService.getCart(props.user.id).then(
             (responce) => {
                 console.log(responce.data)
                 setIsAdded(responce.data.find(obj => obj.name === name) !== undefined ? true : false)
-                setCountBathrooms(responce.data.find(obj => obj.name === name).count2)
-                setCountRooms(responce.data.find(obj => obj.name === name).count1)
+                setCountBathrooms(responce.data.find(obj => obj.name === name) !== undefined ? responce.data.find(obj => obj.name === name).count2 : 1)
+                setCountRooms(responce.data.find(obj => obj.name === name) !== undefined ? responce.data.find(obj => obj.name === name).count1 : 1)
             })
     }, [])
 
     const addToCart = () => {
         const newElement = {
-            userId: props.userId,
+            userId: props.user.id,
             name: name,
             price: startPrice + countRooms * priceRoom + countBathrooms * priceBathroom,
             unit: unit,
@@ -95,7 +95,7 @@ function HouseCard(props) {
                 комнат и санузлов, кухни и коридора</h5>
             <div className={styles.priceorder}>
                 <h2>{startPrice + countRooms * priceRoom + countBathrooms * priceBathroom} BYN</h2>
-                {isAdded ?
+                {(localStorage.getItem("user") != null && props.user.active) && (isAdded ?
                     <div className={styles.buttonActive}>
                         <button>
                             <img src='/img/done.png' />
@@ -104,7 +104,7 @@ function HouseCard(props) {
                     <button onClick={addToCart}>
                         <img src='/img/plus.png' />
                     </button>
-                }
+                )}
             </div>
         </div>
     );
